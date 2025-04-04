@@ -1,5 +1,5 @@
 # WGUPS_Routing_Program
-This project simulates a fictional WGUPS delivery route.
+This project simulates a fictional Western Governors University Parcel Service (WGUPS) delivery route. In the terminal, the user is asked for a time in the day. The program simulates the delivery route until the selected time and prints the status of all packages and trucks.
 
 ### Usage Terms
 This project is a demonstration for prospective employers, recruiters, HR, and other applicable personnel's review and evaluation.
