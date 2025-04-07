@@ -22,7 +22,7 @@ class HashTable:
     def update(self, package_id: int, delivery_address: str, delivery_deadline: str, delivery_city: str, delivery_zip_code: str, package_weight: int, delivery_status: str):
         idx = self.hash(package_id)
         for i, pkg in enumerate(self.table[idx]):
-            pkg_id, delivery_address, delivery_deadline, delivery_city, delivery_zip_code, package_weight, _ = pkg
+            pkg_id, _, _, _, _, _, _ = pkg
             if pkg_id == package_id: #Make sure it is the package we are looking for
                 self.table[idx][i] = (pkg_id, delivery_address, delivery_deadline, delivery_city, delivery_zip_code, package_weight, delivery_status)
 
@@ -49,53 +49,54 @@ class HashTable:
     def display(self):
         string: str = "" #Assigning the string a value to allow concatenation
         for i in range(40): #Iterate over all 40 package ids
-            string += "\n"+ str(i + 1) + " Address: " + self.look_up(i + 1)[0] + "\t" + "Deadline: " + self.look_up(i + 1)[1] + "\t" + "City: " + self.look_up(i + 1)[2] + "\t" + "Zip Code: " + self.look_up(i + 1)[3] + "\t" + "Weight: " + str(self.look_up(i + 1)[4]) + "\t" + "Status: " + self.look_up(i + 1)[5]
+            j = i + 1
+            string += "\n"+ str(j) + " Address: " + self.look_up(j)[0] + "\t" + "Deadline: " + self.look_up(j)[1] + "\t" + "City: " + self.look_up(j)[2] + "\t" + "Zip Code: " + self.look_up(j)[3] + "\t" + "Weight: " + str(self.look_up(j)[4]) + "\t" + "Status: " + self.look_up(j)[5]
         print(string)
 
 #Creating a hash table object using the HashTable class for package information
 hash_table = HashTable(40)
 
 #Inserting the information from the WGUPS Package File verbatim
-hash_table.insert(1, "195 W Oakland Ave", "#######", "Salt Lake City", "84115 UT", 21, "At the hub in Truck One")
-hash_table.insert(2, "2530 S 500 E", "EOD", "Salt Lake City", "84106 UT", 44, "At the hub in Truck One")
-hash_table.insert(3, "233 Canyon Rd", "EOD", "Salt Lake City", "84103 UT", 2, "At the hub in Truck Two")
-hash_table.insert(4, "380 W 2880 S", "EOD", "Salt Lake City", "84115 UT", 4, "At the hub in Truck One")
-hash_table.insert(5, "410 S State St", "EOD", "Salt Lake City", "84111 UT", 5, "At the hub in Truck One")
-hash_table.insert(6, "3060 Lester St", "#######", "West Valley City", "84119 UT", 88, "Delayed on flight")
-hash_table.insert(7, "1330 2100 S", "EOD", "Salt Lake City", "84106 UT", 8, "At the hub in Truck One")
-hash_table.insert(8, "300 State St", "EOD", "Salt Lake City", "84103 UT", 9, "At the hub in Truck One")
-hash_table.insert(9, "300 State St", "EOD", "Salt Lake City", "84103 UT", 2, "At the hub in Truck Three")
-hash_table.insert(10, "600 E 900 South", "EOD", "Salt Lake City", "84105 UT", 1, "At the hub in Truck One")
-hash_table.insert(11, "2600 Taylorsville Blvd", "EOD", "Salt Lake City", "84118 UT", 1, "At the hub in Truck One")
-hash_table.insert(12, "3575 W Valley Central Station bus Loop", "EOD", "West Valley City", "84119 UT", 1, "At the hub in Truck One")
-hash_table.insert(13, "2010 W 500 S", "#######", "Salt Lake City", "84104 UT", 2, "At the hub in Truck One")
-hash_table.insert(14, "4300 S 1300 E", "#######", "Millcreek", "84117 UT", 88, "At the hub in Truck One")
-hash_table.insert(15, "4580 S 2300 E", "9:00 AM", "Holladay", "84117 UT", 4, "At the hub in Truck One")
-hash_table.insert(16, "4580 S 2300 E", "#######", "Holladay", "84117 UT", 88, "At the hub in Truck One")
-hash_table.insert(17, "3148 S 1100 W", "EOD", "Salt Lake City", "84119 UT", 2, "At the hub in Truck One")
-hash_table.insert(18, "1488 4800 S", "EOD", "Salt Lake City", "84123 UT", 6, "At the hub in Truck Two")
-hash_table.insert(19, "177 W Price Ave", "EOD", "Salt Lake City", "84115 UT", 37, "At the hub in Truck One")
-hash_table.insert(20, "3595 Main St", "#######", "Salt Lake City", "84115 UT", 37, "At the hub in Truck One")
-hash_table.insert(21, "3595 Main St", "EOD", "Salt Lake City", "84115 UT", 3, "At the hub in Truck Two")
-hash_table.insert(22, "6351 South 900 East", "EOD", "Murray", "84121 UT", 2, "At the hub in Truck Two")
-hash_table.insert(23, "5100 South 2700 West", "EOD", "Salt Lake City", "84118 UT", 5, "At the hub in Truck Two")
-hash_table.insert(24, "5025 State St", "EOD", "Murray", "84107 UT", 7, "At the hub in Truck Two")
-hash_table.insert(25, "5383 South 900 East #104", "#######", "Salt Lake City", "84117 UT", 7, "Delayed on flight")
-hash_table.insert(26, "5383 South 900 East #104", "EOD", "Salt Lake City", "84117 UT", 25, "At the hub in Truck Two")
-hash_table.insert(27, "1060 Dalton Ave S", "EOD", "Salt Lake City", "84104 UT", 5, "At the hub in Truck Two")
-hash_table.insert(28, "2835 Main St", "EOD", "Salt Lake City", "84115 UT", 7, "Delayed on flight")
-hash_table.insert(29, "1330 2100 S", "#######", "Salt Lake City", "84106 UT", 2, "At the hub in Truck Two")
-hash_table.insert(30, "300 State St", "#######", "Salt Lake City", "84103 UT", 1, "At the hub in Truck Two")
-hash_table.insert(31, "3365 S 900 W", "#######", "Salt Lake City", "84119 UT", 1, "At the hub in Truck Two")
-hash_table.insert(32, "3365 S 900 W", "EOD", "Salt Lake City", "84119 UT", 1, "Delayed on flight")
-hash_table.insert(33, "2530 S 500 E", "EOD", "Salt Lake City", "84106 UT", 1, "At the hub in Truck Two")
-hash_table.insert(34, "4580 S 2300 E", "#######", "Holladay", "84117 UT", 2, "At the hub in Truck Two")
-hash_table.insert(35, "1060 Dalton Ave S", "EOD", "Salt Lake City", "84104 UT", 88, "At the hub in Truck Two")
-hash_table.insert(36, "2300 Parkway Blvd", "EOD", "West Valley City", "84119 UT", 88, "At the hub in Truck Two")
-hash_table.insert(37, "410 S State St", "#######", "Salt Lake City", "84111 UT", 2, "At the hub in Truck Three")
-hash_table.insert(38, "410 S State St", "EOD", "Salt Lake City", "84111 UT", 9, "At the hub in Truck Two")
-hash_table.insert(39, "2010 W 500 S", "EOD", "Salt Lake City", "84104 UT", 9, "At the hub in Truck Three")
-hash_table.insert(40, "380 W 2880 S", "#######", "Salt Lake City", "84115 UT", 45, "At the hub in Truck Three")
+hash_table.insert(1, "195 W Oakland Ave", "#######", "Salt Lake City", "UT 84115", 21, "At the hub in Truck No. 1")
+hash_table.insert(2, "2530 S 500 E", "EOD", "Salt Lake City", "UT 84106", 44, "At the hub in Truck No. 1")
+hash_table.insert(3, "233 Canyon Rd", "EOD", "Salt Lake City", "UT 84103", 2, "At the hub in Truck No. 2")
+hash_table.insert(4, "380 W 2880 S", "EOD", "Salt Lake City", "UT 84115", 4, "At the hub in Truck No. 1")
+hash_table.insert(5, "410 S State St", "EOD", "Salt Lake City", "UT 84111", 5, "At the hub in Truck No. 1")
+hash_table.insert(6, "3060 Lester St", "#######", "West Valley City", "UT 84119", 88, "Delayed on flight for Truck No. 3")
+hash_table.insert(7, "1330 2100 S", "EOD", "Salt Lake City", "UT 84106", 8, "At the hub in Truck No. 1")
+hash_table.insert(8, "300 State St", "EOD", "Salt Lake City", "UT 84103", 9, "At the hub in Truck No. 1")
+hash_table.insert(9, "300 State St", "EOD", "Salt Lake City", "UT 84103", 2, "At the hub in Truck No. 3")
+hash_table.insert(10, "600 E 900 South", "EOD", "Salt Lake City", "UT 84105", 1, "At the hub in Truck No. 1")
+hash_table.insert(11, "2600 Taylorsville Blvd", "EOD", "Salt Lake City", "UT 84118", 1, "At the hub in Truck No. 1")
+hash_table.insert(12, "3575 W Valley Central Station bus Loop", "EOD", "West Valley City", "UT 84119", 1, "At the hub in Truck No. 1")
+hash_table.insert(13, "2010 W 500 S", "#######", "Salt Lake City", "UT 84104", 2, "At the hub in Truck No. 1")
+hash_table.insert(14, "4300 S 1300 E", "#######", "Millcreek", "UT 84117", 88, "At the hub in Truck No. 1")
+hash_table.insert(15, "4580 S 2300 E", "9:00 AM", "Holladay", "UT 84117", 4, "At the hub in Truck No. 1")
+hash_table.insert(16, "4580 S 2300 E", "#######", "Holladay", "UT 84117", 88, "At the hub in Truck No. 1")
+hash_table.insert(17, "3148 S 1100 W", "EOD", "Salt Lake City", "UT 84119", 2, "At the hub in Truck No. 1")
+hash_table.insert(18, "1488 4800 S", "EOD", "Salt Lake City", "UT 84123", 6, "At the hub in Truck No. 2")
+hash_table.insert(19, "177 W Price Ave", "EOD", "Salt Lake City", "UT 84115", 37, "At the hub in Truck No. 1")
+hash_table.insert(20, "3595 Main St", "#######", "Salt Lake City", "UT 84115", 37, "At the hub in Truck No. 1")
+hash_table.insert(21, "3595 Main St", "EOD", "Salt Lake City", "UT 84115", 3, "At the hub in Truck No. 2")
+hash_table.insert(22, "6351 South 900 East", "EOD", "Murray", "UT 84121", 2, "At the hub in Truck No. 2")
+hash_table.insert(23, "5100 South 2700 West", "EOD", "Salt Lake City", "UT 84118", 5, "At the hub in Truck No. 2")
+hash_table.insert(24, "5025 State St", "EOD", "Murray", "UT 84107", 7, "At the hub in Truck No. 2")
+hash_table.insert(25, "5383 South 900 East #104", "#######", "Salt Lake City", "UT 84117", 7, "Delayed on flight for Truck No. 3")
+hash_table.insert(26, "5383 South 900 East #104", "EOD", "Salt Lake City", "UT 84117", 25, "At the hub in Truck No. 2")
+hash_table.insert(27, "1060 Dalton Ave S", "EOD", "Salt Lake City", "UT 84104", 5, "At the hub in Truck No. 2")
+hash_table.insert(28, "2835 Main St", "EOD", "Salt Lake City", "UT 84115", 7, "Delayed on flight for Truck No. 3")
+hash_table.insert(29, "1330 2100 S", "#######", "Salt Lake City", "UT 84106", 2, "At the hub in Truck No. 2")
+hash_table.insert(30, "300 State St", "#######", "Salt Lake City", "UT 84103", 1, "At the hub in Truck No. 2")
+hash_table.insert(31, "3365 S 900 W", "#######", "Salt Lake City", "UT 84119", 1, "At the hub in Truck No. 2")
+hash_table.insert(32, "3365 S 900 W", "EOD", "Salt Lake City", "UT 84119", 1, "Delayed on flight for Truck No. 3")
+hash_table.insert(33, "2530 S 500 E", "EOD", "Salt Lake City", "UT 84106", 1, "At the hub in Truck No. 2")
+hash_table.insert(34, "4580 S 2300 E", "#######", "Holladay", "UT 84117", 2, "At the hub in Truck No. 2")
+hash_table.insert(35, "1060 Dalton Ave S", "EOD", "Salt Lake City", "UT 84104", 88, "At the hub in Truck No. 2")
+hash_table.insert(36, "2300 Parkway Blvd", "EOD", "West Valley City", "UT 84119", 88, "At the hub in Truck No. 2")
+hash_table.insert(37, "410 S State St", "#######", "Salt Lake City", "UT 84111", 2, "At the hub in Truck No. 3")
+hash_table.insert(38, "410 S State St", "EOD", "Salt Lake City", "UT 84111", 9, "At the hub in Truck No. 2")
+hash_table.insert(39, "2010 W 500 S", "EOD", "Salt Lake City", "UT 84104", 9, "At the hub in Truck No. 3")
+hash_table.insert(40, "380 W 2880 S", "#######", "Salt Lake City", "UT 84115", 45, "At the hub in Truck No. 3")
 
 #Developed a two-key hash table class to use as a data structure for holding distance data
 class TwoKeyTable:
@@ -385,7 +386,7 @@ class Truck:
         print(string)
 
 #Loading truck one respecting package loading conditions (some packages must go on truck two)
-truck_one = Truck(16, "Truck One")
+truck_one = Truck(16, "Truck No. 1")
 for i in range(2):
     truck_one.add(i + 1)
 for i in range(2):
@@ -398,7 +399,7 @@ for i in range(2):
     truck_one.add(i + 19)
 
 #Loading truck two including the packages it must have (also keeping max inventory in mind)
-truck_two = Truck(16, "Truck Two")
+truck_two = Truck(16, "Truck No. 2")
 truck_two.add(3)
 truck_two.add(18)
 for i in range (4):
@@ -412,7 +413,7 @@ for i in range(4):
 truck_two.add(38)
 
 #Loading truck three, a driver comes back for this one to accomodate delayed packages
-truck_three = Truck(8, "Truck Three")
+truck_three = Truck(8, "Truck No. 3")
 truck_three.add(6)
 truck_three.add(25)
 truck_three.add(28)
@@ -435,7 +436,9 @@ def real_time(minutes: float) -> str:
     segment2 = ":"
     segment3 = ""
     segment4 = " am"
-    if hours > 12:
+    if hours == 12:
+        segment4 = " pm"
+    elif hours > 12:
         hours -= 12
         segment4 = " pm"
     segment1 = str(hours)
@@ -453,7 +456,9 @@ def real_time_zerod(minutes: float) -> str:
     segment2 = ":"
     segment3 = ""
     segment4 = " am" #Constructing the desired time format by segments
-    if hours > 12:
+    if hours == 12:
+        segment4 = " pm"
+    elif hours > 12:
         hours -= 12
         segment4 = " pm"
     if hours < 10:
@@ -469,6 +474,7 @@ def real_time_zerod(minutes: float) -> str:
 #lists declared for use in the delivery algorithm
 time_critical: list = []
 delivered = []
+wrong_address = [9]
 
 #Sorting package priority for the algorithm
 for i in range(40):
@@ -478,31 +484,36 @@ for i in range(40):
 
 #A function simulating the arrival of the delayed packages
 def flight_arrives():
+    j: int
     for i in range(40):
-        info = hash_table.look_up(i + 1)
-        if info[5] == "Delayed":
-            hash_table.update(i + 1, info[0], info[1], info[2], info[3], info[4], "At the hub")
+        j = i + 1
+        info = hash_table.look_up(j)
+        if "Delayed" in info[5]:
             if i + 1 in truck_one.get_numbers():
-                truck_one.update_status(i + 1, "At the hub", " in Truck One")
+                truck_one.update_status(j, "At the hub in Truck No. 1")
+                hash_table.update(j, info[0], info[1], info[2], info[3], info[4], "At the hub in Truck No. 1")
             if i + 1 in truck_two.get_numbers():
-                truck_two.update_status(i + 1, "At the hub", " in Truck Two")
+                truck_two.update_status(j, "At the hub in Truck No. 2")
+                hash_table.update(j, info[0], info[1], info[2], info[3], info[4], "At the hub in Truck No. 2")
             if i + 1 in truck_three.get_numbers():
-                truck_three.update_status(i + 1, "At the hub", " in Truck Three")
+                truck_three.update_status(j, "At the hub in Truck No. 3")
+                hash_table.update(j, info[0], info[1], info[2], info[3], info[4], "At the hub in Truck No. 3")
 
 #A function simulating WGUPS receiving and updating package 9's corrected address
 def address_corrected():
-    for i in range(40):
-        info = hash_table.look_up(i + 1)
-        hash_table.update(i + 1, "410 S State St", info[1], info[2], "84111 UT", info[4], info[5])
-        if i + 1 in truck_one.get_numbers():
-            truck_one.update_address(i + 1, "410 S State St")
-            truck_one.update_zip_code(i + 1, "84111 UT")
-        if i + 1 in truck_two.get_numbers():
-            truck_two.update_address(i + 1, "410 S State St")
-            truck_two.update_zip_code(i + 1, "84111 UT")
-        if i + 1 in truck_three.get_numbers():
-            truck_three.update_address(i + 1, "410 S State St")
-            truck_three.update_zip_code(i + 1, "84111 UT")
+    for i in wrong_address:
+        info = hash_table.look_up(i)
+        hash_table.update(i, "410 S State St", info[1], info[2], "UT 84111", info[4], info[5])
+        if i in truck_one.get_numbers():
+            truck_one.update_address(i, "410 S State St")
+            truck_one.update_zip_code(i, "UT 84111")
+        if i in truck_two.get_numbers():
+            truck_two.update_address(i, "410 S State St")
+            truck_two.update_zip_code(i, "UT 84111")
+        if i in truck_three.get_numbers():
+            truck_three.update_address(i, "410 S State St")
+            truck_three.update_zip_code(i, "UT 84111")
+    wrong_address.clear()
 
 start_mins = 480 #8:00 am in minutes since midnight
 #stop_mins represents the time the simulation should stop at
@@ -511,6 +522,7 @@ stop_mins = 1439 #By default, the simulation runs all day or until completion
 num: int = 0
 print("Please keep times no earlier than 8:00 am and no later than 11:59 pm")
 user_string = input("Please enter a time in (HH:MM am/pm) format:")# Get User Input
+user_string = user_string.strip() #Removing leading and trailing space
 counter = 0
 if not ":" in user_string: #Compensate for common spelling error
     counter = 1
@@ -521,8 +533,9 @@ else: #Made sure to use a tolerant approach to input (case insensitive etcetera)
         num = 720
     if user_string[0] == "0": #Adapt to the zerod format as necessary
         user_string = int(user_string[1]) * 60 + int(user_string[3 - counter] + user_string[4 - counter])
-    elif len(user_string) == 8:
+    elif len(user_string) > 3:
         user_string = int(user_string[0] + user_string[1]) * 60 + int(user_string[3 - counter] + user_string[4 - counter])
+    #Need to check if hours are a 2-digit number still
     else:
         user_string = int(user_string[0]) * 60 + int(user_string[2 - counter] + user_string[3 - counter])
 stop_mins = user_string + num
@@ -534,11 +547,12 @@ def next_delivery(truck: Truck, start_time, stop_time):
     candidates = sorted(truck.get_numbers()) #The algorithm considers these
     valid_candidates = []
     for candidate in candidates:
-        if candidate not in delivered: #We don't want to redeliver packages
+        if candidate not in delivered and candidate not in wrong_address: #We don't want to redeliver packages or deliver wrong address
             valid_candidates.append(candidate)
-        elif candidate in time_critical:
+        if candidate in time_critical:
             valid_candidates = [candidate] #Give time critical packages priority
-    if not valid_candidates:
+            break
+    if not valid_candidates and not wrong_address:
         if start_time + truck.get_mins() + dist_minutes(get_distance(truck.get_location(), "Hub")) < stop_time:
             truck.set_mins(truck.get_mins() + dist_minutes(get_distance(truck.get_location(), "Hub")))
             truck.set_location("Hub") #We need to update trucks' locations to the destinations to simulate movement
@@ -546,6 +560,8 @@ def next_delivery(truck: Truck, start_time, stop_time):
             truck.set_stopped(True)
         else:
             truck.set_stopped(True)
+    elif not valid_candidates: #Return if there are no valid candidates but there is still a wrong address waiting
+        return
     next_package: int
     next_distance = 1000 #Set arbitrarily high by default so it can be replaced
     destination: str
@@ -608,7 +624,7 @@ def reset_trucks():
         truck_three.set_stopped(False)
 
 #Simulation branching to make sure events are considered
-if stop_mins > 620: #Calculating with the effects of flight delay and wrong address
+if stop_mins >= 620: #Calculating with the effects of flight delay and wrong address
     simulate_until(545)
     flight_arrives() #The flight carrying several delayed packages arrives
     reset_trucks()
@@ -616,7 +632,7 @@ if stop_mins > 620: #Calculating with the effects of flight delay and wrong addr
     address_corrected() #WGUPS corrects package 9's address
     reset_trucks()
     simulate_until(stop_mins) #Finish running simulation after events
-elif stop_mins > 545: #Calculating with the flight delay's effect
+elif stop_mins >= 545: #Calculating with the flight delay's effect
     simulate_until(545)
     flight_arrives() #The flight brings delayed packages to the hub
     reset_trucks()
@@ -632,9 +648,9 @@ total_distance = round(truck_one.get_distance() + truck_two.get_distance() + tru
 #Displaying all relevant distance information
 print("\n------ STATE OF TRUCKS AS OF " + real_time(stop_mins) + " ------")
 print("\nTOTAL DISTANCE TRAVELED: " + str(total_distance) + " miles")
-print("TRUCK ONE TRAVELED: " + str(round(truck_one.get_distance(), 2)) + " miles" + " and is at " + truck_one.get_location())
-print("TRUCK TWO TRAVELED: " + str(round(truck_two.get_distance(), 2)) + " miles" + " and is at " + truck_two.get_location())
-print("TRUCK THREE TRAVELED: " + str(round(truck_three.get_distance(), 2)) + " miles" + " and is at " + truck_three.get_location())
+print("TRUCK NO. 1 TRAVELED: " + str(round(truck_one.get_distance(), 2)) + " miles" + " and is at " + truck_one.get_location())
+print("TRUCK NO. 2 TRAVELED: " + str(round(truck_two.get_distance(), 2)) + " miles" + " and is at " + truck_two.get_location())
+print("TRUCK NO. 3 TRAVELED: " + str(round(truck_three.get_distance(), 2)) + " miles" + " and is at " + truck_three.get_location())
 
 #Displaying the state of packages as of the time entered as input
 print("\n------ STATE OF PACKAGES AS OF " + real_time(stop_mins) + " ------")
